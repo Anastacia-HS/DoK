@@ -106,7 +106,7 @@ public class Reservation_start_page extends CategoryFrame{
 		}
 		
 		
-		//지역
+		//지역d
 		a_panel.setBounds(PaddingLeft + 425, PaddingTop, 450, 600);
 		a_panel.setOpaque(true);
 		a_panel.setBackground(Color.LIGHT_GRAY);
