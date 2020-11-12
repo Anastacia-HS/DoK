@@ -19,12 +19,12 @@ import User.User;
 
 public class LoginPage extends JFrame{
 	//위치 
-	private final static int C_X = Main.SCREEN_WIDTH/2+200;
-	private final static int IDLable_Y = 200;
-	private final static int IDTextF_Y = 300;
-	private final static int PWLable_Y = 400;
-	private final static int PWTextF_Y = 500;
-	private final static int LoginBtn_Y = 700;
+	private final static int C_X = 90;
+	private final static int IDLable_Y = 125;
+	private final static int IDTextF_Y = 125;
+	private final static int PWLable_Y = 175;
+	private final static int PWTextF_Y = 175;
+	private final static int LoginBtn_Y = 250;
 	
 	
 	private  User user = new User();
@@ -38,8 +38,7 @@ public class LoginPage extends JFrame{
 	private JButtonT jbtnLogin = new JButtonT();
 	private JButtonT jbtnSingUp = new JButtonT();
 	private ImageIcon imgLogo = new ImageIcon("src/imges/dok.png");
-	private JLabel jlLogo = new JLabel();
-	private JLabel designImg = new JLabel();
+	private JLabel jlLogo = new JLabel("DoK");
 	
 	
 	
@@ -47,63 +46,65 @@ public class LoginPage extends JFrame{
 	private String userID,userPassword;
 	
 	//font
-	private Font font1 = new Font("나눔바른고딕", Font.BOLD, 30);
-	private Font font2 = new Font("나눔바른고딕", Font.PLAIN, 20);
+	protected Font Logo = new Font("Franklin Gothic Heavy", Font.PLAIN, 75);
+	private Font font1 = new Font("나눔바른고딕", Font.BOLD, 20);
+	private Font font2 = new Font("나눔바른고딕", Font.PLAIN, 15);
 	
 	public LoginPage() {
 		super("Login");
-		setSize(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
+		setSize(500, 350);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		getContentPane().setLayout(null);	//레이아웃 null
 		setVisible(true);	
 		
 		//패널
-		jp.setBounds(0,0,Main.SCREEN_WIDTH,Main.SCREEN_HEIGHT);
+		jp.setBounds(0,0, 500, 350);
 		jp.setBackground(Color.WHITE);
 		jp.setLayout(null);
 		add(jp);
 		
 		//로고 이미지 label
-		jlLogo.setIcon(imgLogo);
+		/*
+		 * jlLogo.setIcon(imgLogo);
 		jlLogo.setBounds(300, 125,200,100);
 		jp.add(jlLogo);
+		*/
 		
-		designImg.setBounds(100, 300, 600, 600);
-		designImg.setOpaque(true);
-		designImg.setBackground(Color.ORANGE);
-		jp.add(designImg);
+		jlLogo.setBounds(175, 10, 300, 100);
+		jlLogo.setFont(Logo);
+		jp.add(jlLogo);
 		
 		
 		//아이디 label
-		jlId.setBounds(C_X,IDLable_Y,200,100);
+		jlId.setBounds(C_X,IDLable_Y,50,50);
 		jlId.setFont(font1);
 		jp.add(jlId);
 		
 		//아이디 textField
-		jtId.setBounds(C_X, IDTextF_Y, 250, 50);
+		jtId.setBounds(C_X + 50, IDTextF_Y, 300, 40);
 		jtId.setFont(font2);
 		jp.add(jtId);
 		
 		//패스워드 label
-		jlPw.setBounds(C_X,PWLable_Y,200,100);
+		jlPw.setBounds(C_X - 55,PWLable_Y,100,50);
 		jlPw.setFont(font1);
 		jp.add(jlPw);
 		
 		//패스워드 textField
-		jtPw.setBounds(C_X,PWTextF_Y,250,50);
+		jtPw.setBounds(C_X + 50, PWTextF_Y,300,40);
 		jtPw.setFont(font2);
 		jp.add(jtPw);
 		
 		//로그인 버튼
 		jbtnLogin.setText("로그인");
 		jbtnLogin.setFont(font1);
-		jbtnLogin.setBounds(C_X,LoginBtn_Y,300,80);
+		jbtnLogin.setBounds(C_X + 30,LoginBtn_Y,125,40);
 		jp.add(jbtnLogin);
 		
 		//회원가입 버튼
 		jbtnSingUp.setText("회원가입");
-		jbtnSingUp.setBounds(C_X,LoginBtn_Y+100,300,80);
+		jbtnSingUp.setBounds(C_X + 180,LoginBtn_Y,125,40);
 		jbtnSingUp.setFont(font1);
 		jp.add(jbtnSingUp);
 		
