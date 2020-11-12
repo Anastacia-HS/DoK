@@ -60,9 +60,11 @@ public class Reservation_start_page extends CategoryFrame{
 	Font font1 = new Font("»ﬁ∏’µ’±Ÿ«ÏµÂ∂Û¿Œ", Font.PLAIN, 25);
 	Font font2 = new Font("»ﬁ∏’µ’±Ÿ«ÏµÂ∂Û¿Œ", Font.PLAIN, 20);
 	
-	public Reservation_start_page() {
+	public Reservation_start_page() {}
+	
+	
+	public Reservation_start_page(User user) {	
 		super("øπ∏≈");
-		
 		setSize(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
 		setResizable(false);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -195,12 +197,6 @@ public class Reservation_start_page extends CategoryFrame{
 		
 	}
 	
-	
-	public Reservation_start_page(User user) {	
-		
-		
-	}
-	
 	public static void main(String[] args) {
 		new Reservation_start_page();
 	}
@@ -212,7 +208,6 @@ public class Reservation_start_page extends CategoryFrame{
 				for(int i = 0; i < seoullist.length; i++) {
 					gyeonggilist[i].setVisible(false);
 					seoullist[i].setVisible(true);
-					System.out.println("fff");
 				}
 			}else if(e.getSource() == gyeonggi) {
 				for(int i = 0; i < seoullist.length; i++) {

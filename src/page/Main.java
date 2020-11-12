@@ -14,8 +14,8 @@ public class Main {
 		//new DOKPage(user);
 		//new LoginPage();
 		//new SignUpPage();
-		new Reservation_start_page();
-		//new MyPage(user);
+		//new Reservation_start_page();
+		new MyPage(user);
 		//new ChartPage(user);
 		//new P_InformationPage(user);
 		//new ChartPage();
