@@ -9,12 +9,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 
 import Movie.DB_MovieInfo;
@@ -25,38 +27,51 @@ import User.User;
 public class ChartPage extends CategoryFrame {
 	
 	//pos
-	private final static int Padding_Left = 150;
-	private final static int Padding_Top = 75;
+	private final static int Padding_Left = 130;
+	private final static int Padding_Top = 50;
+	private final static int right_Padding_Left = 25;
+	private final static int right_Padding_Top = 30;
 	private final static double Panel_Height = Main.SCREEN_HEIGHT * 1.4 ;
 	
 	// size
 	private Dimension size = new Dimension();// 사이즈를 지정하기 위한 객체 생성
 	
 	//객체
-	private DB_MovieInfo connection = new DB_MovieInfo();
+	private DB_MovieInfo moive_connect = new DB_MovieInfo();
 	private Movie[] movies;
 
 	
 	//component
-	private JPanel panel = new JPanel();
-	private JLabel genre = new JLabel("장르");
+	private JPanel jpanel = new JPanel();
+	private JPanel selectPanel = new JPanel();
+	private JLabel jlgenre = new JLabel("장르");
 	private String[] string_genre = {"전체", "공포", "드라마", "로맨스", "스릴러", "애니메이션", "액션", "SF"};
-	private JComboBox comboBox = new JComboBox(string_genre);
-	private JButton rating = new JButton("평점");
-	private JButton audience = new JButton("관객 수");
-	private JButton open_day = new JButton("개봉 날짜");
-	private JButton ganada = new JButton("가나다 순");
-	private JLabel[][] poster = new JLabel[4][2];
-	private JLabel[][] movie_info = new JLabel[4][2];
-	private JLabel[] rank = new JLabel[8];
-	private JLabel[] rank_name = new JLabel[8];
+	//private JComboBox comboBox = new JComboBox(string_genre);
+	private JButton btn_rating = new JButton("평점");
+	private JButton btn_audience = new JButton("관객 수");
+	private JButton btn_openday = new JButton("개봉 날짜");
+	private JButton btn_ganada = new JButton("가나다 순");
+	private JLabel[][] jlposter = new JLabel[2][4];
+	private JLabel[][] jlmovie_info = new JLabel[2][4];
+	private JLabel[] jlrank = new JLabel[8];
+	private JLabel[] jlopen_day = new JLabel[8];
+	private JLabel[] jlRaing = new JLabel[8];
+	private JLabel[] jlrank_name = new JLabel[8];
+	private ImageIcon imgPoster = new ImageIcon();
+	
+	private ButtonGroup g = new ButtonGroup();
+	private JRadioButton[] radioGenre = new JRadioButton[8];
+	
+	
 	
 	ChartEvent listener = new ChartEvent();
 	
 	//Design
-	Font m_name_font = new Font("나눔바른고딕", Font.PLAIN, 17);
+	Font m_name_font = new Font("나눔바른고딕", Font.PLAIN, 25);
 	Font m_rank_font = new Font("나눔바른고딕", Font.BOLD, 20);
-	Font option_font = new Font("나눔바른고딕", Font.PLAIN, 20);
+	Font option_font = new Font("나눔바른고딕", Font.PLAIN, 15);
+	Font fontMain = new Font("휴먼둥근헤드라인", Font.PLAIN, 25);
+	Font fontContent = new Font("휴먼둥근헤드라인", Font.PLAIN, 17);
 	
 	public ChartPage() {
 		
@@ -71,118 +86,164 @@ public class ChartPage extends CategoryFrame {
 		setVisible(true);
 		
 		//영화 DB연결
-		this.movies = connection.getMovieInfoAll("rating");
+		this.movies = moive_connect.getMovieInfoAll("rating");
 		this.user = user;
 		
-		//장르
-		genre.setBounds(Padding_Left, Padding_Top, 75, 40);
-		genre.setFont(option_font);
-		genre.setHorizontalAlignment(JLabel.CENTER);
-		panel.add(genre);
 		
-		comboBox.setBounds(Padding_Left + 75, Padding_Top, 200, 40);
-		comboBox.setFont(m_name_font);
-		panel.add(comboBox);
+		//장르
+		jlgenre.setBounds(right_Padding_Left, right_Padding_Top, 75, 40);
+		jlgenre.setFont(fontMain); jlgenre.setHorizontalAlignment(JLabel.CENTER);
+		selectPanel.add(jlgenre);
+		
+		for(int i = 0; i < string_genre.length; i++) {
+			radioGenre[i] = new JRadioButton(string_genre[i]);
+			radioGenre[i].setBounds(right_Padding_Left + 25, right_Padding_Top + 50 + (i * 35), 100, 30);
+			radioGenre[i].setOpaque(true);
+			radioGenre[i].setBackground(Color.WHITE);
+			radioGenre[i].setFont(option_font);
+			g.add(radioGenre[i]);
+			selectPanel.add(radioGenre[i]);
+		}
+		 
 		
 		//평점
-		rating.setBounds(Padding_Left + 375, Padding_Top, 125, 40);
-		rating.setBackground(Color.PINK);
-		rating.setFont(option_font);
-		rating.setHorizontalAlignment(JButton.CENTER);
-		rating.addActionListener(new ChartEvent());
-		panel.add(rating);
+		btn_rating.setBounds(right_Padding_Left, right_Padding_Top + 375, 150, 40);
+		btn_rating.setBackground(Color.WHITE);
+		btn_rating.setFont(fontMain);
+		btn_rating.setHorizontalAlignment(JButton.LEFT);
+		btn_rating.setFocusPainted(false);
+		btn_rating.setBorderPainted(false);
+		btn_rating.addActionListener(new ChartEvent());
+		selectPanel.add(btn_rating);
 		
 		//관객 수
-		audience.setBounds(Padding_Left + 600, Padding_Top, 125, 40);
-		audience.setBackground(Color.PINK);
-		audience.setFont(option_font);
-		audience.setHorizontalAlignment(JButton.CENTER);
-		audience.addActionListener(new ChartEvent());
-		panel.add(audience);
+		btn_audience.setBounds(right_Padding_Left, right_Padding_Top + 440, 150, 40);
+		btn_audience.setBackground(Color.WHITE);
+		btn_audience.setFont(fontMain);
+		btn_audience.setHorizontalAlignment(JButton.LEFT);
+		btn_audience.setFocusPainted(false);
+		btn_audience.setBorderPainted(false);
+		btn_audience.addActionListener(new ChartEvent());
+		selectPanel.add(btn_audience);
 		
 		//개봉날짜
-		open_day.setBounds(Padding_Left + 825, Padding_Top, 125, 40);
-		open_day.setBackground(Color.PINK);
-		open_day.setFont(option_font);
-		open_day.setHorizontalAlignment(JButton.CENTER);
-		open_day.addActionListener(new ChartEvent());
-		panel.add(open_day);
-		
+		btn_openday.setBounds(right_Padding_Left, right_Padding_Top + 505, 150, 40);
+		btn_openday.setBackground(Color.WHITE);
+		btn_openday.setFont(fontMain);
+		btn_openday.setHorizontalAlignment(JButton.LEFT);
+		btn_openday.setFocusPainted(false);
+		btn_openday.setBorderPainted(false);
+		btn_openday.addActionListener(new ChartEvent());
+		selectPanel.add(btn_openday);
+	
 		//가나다
-		ganada.setBounds(Padding_Left + 1050, Padding_Top, 125, 40);
-		ganada.setBackground(Color.PINK);
-		ganada.setFont(option_font);
-		ganada.setHorizontalAlignment(JButton.CENTER);
-		ganada.addActionListener(new ChartEvent());
-		panel.add(ganada);
+		btn_ganada.setBounds(right_Padding_Left, right_Padding_Top + 570, 150, 40);
+		btn_ganada.setBackground(Color.WHITE);
+		btn_ganada.setFont(fontMain);
+		btn_ganada.setHorizontalAlignment(JButton.LEFT);
+		btn_ganada.setFocusPainted(false);
+		btn_ganada.setBorderPainted(false);
+		btn_ganada.addActionListener(new ChartEvent());
+		selectPanel.add(btn_ganada);
 		
 		//1~8 순위 
-		for(int i = 0; i < rank.length; i++) {
-			rank[i] = new JLabel((i + 1) + "");
+		for(int i = 0; i < jlrank.length; i++) {
+			jlrank[i] = new JLabel((i + 1) + "");
 			
 			if(i < 4) {
-				rank[i].setBounds(Padding_Left + 185 + (i * 325), Padding_Top + 140, 40, 40);
+				jlrank[i].setBounds(Padding_Left - 10 + (i * 260), Padding_Top, 40, 40);
+				
 			}else {
-				rank[i].setBounds(-965 + (i * 325), Padding_Top + 640, 40, 40);
+				jlrank[i].setBounds(Padding_Left -10 +((i-(jlrank.length/2)) * 260), Padding_Top+500, 40, 40);
 			}
-			
-			
-			rank[i].setOpaque(true);
-			rank[i].setBackground(Color.PINK);
-			rank[i].setFont(m_rank_font);
-			rank[i].setHorizontalAlignment(JLabel.CENTER);
-			panel.add(rank[i]);
+			jlrank[i].setOpaque(true);
+			jlrank[i].setBackground(Color.PINK);
+			jlrank[i].setFont(m_rank_font);
+			jlrank[i].setHorizontalAlignment(JLabel.CENTER);
+			jpanel.add(jlrank[i]);
 		}
 		
-		for(int i = 0; i < poster.length; i++) {
-			for(int j = 0; j < poster[i].length; j++) {
-				poster[i][j] = new JLabel();
-				
-				poster[i][j].setBounds(Padding_Left - 10 + (i * 325), Padding_Top + 150 + (j * 500), 225, 300);
-				poster[i][j].setOpaque(true);
-				poster[i][j].setBackground(Color.GRAY);
-				
-				poster[i][j].addMouseListener(listener);
-				panel.add(poster[i][j]);
-			}
-		}
+		int n=0;
 		
-		for(int i = 0; i < movie_info.length; i++) {
-			for(int j = 0; j < movie_info[i].length; j++) {
-				movie_info[i][j] = new JLabel();
-				
-				movie_info[i][j].setBounds(Padding_Left - 10 + (i * 325), Padding_Top + 150 + (j * 500), 225, 300);
-				movie_info[i][j].setOpaque(true);
-				
-				movie_info[i][j].setBackground(Color.RED);
-				movie_info[i][j].addMouseListener(listener);
-				panel.add(movie_info[i][j]);
+		//영화 포트터
+		for(int i = 0; i < jlposter.length; i++) {
+			for(int j = 0; j < jlposter[i].length; j++) {
+				String src = "src/imges/"+movies[n].getM_name()+".jpg";
+				//String src = "src/imges/겨울 왕국.jpg";
+				imgPoster = new ImageIcon(src);
+				jlposter[i][j] = new JLabel(imgPoster);
+				jlposter[i][j].setBounds(Padding_Left - 10 + (j * 260), Padding_Top + (i * 500), 230, 330);
+				jlposter[i][j].setOpaque(true);
+				jlposter[i][j].setBackground(Color.GRAY);
+				jlposter[i][j].addMouseListener(listener);
+				jpanel.add(jlposter[i][j]);
+				n++;
 			}
 		}
 		
-		for(int i = 0; i < rank_name.length; i++) {
-			rank_name[i] = new JLabel();
-			
+		//영화 정보 출력(마우스 올렸을때)
+		
+		  for(int i = 0; i < jlmovie_info.length; i++) {
+			  for(int j = 0; j <jlmovie_info[i].length; j++) {
+				  jlmovie_info[i][j] = new JLabel();
+				  jlmovie_info[i][j].setBounds(Padding_Left - 10 + (j * 260), Padding_Top + (i * 500), 230, 330); 
+				  jlmovie_info[i][j].setOpaque(true);
+				  jlmovie_info[i][j].setBackground(Color.RED);
+				  jlmovie_info[i][j].addMouseListener(listener);
+				  jpanel.add(jlmovie_info[i][j]); 
+			  }
+		 }
+		 
+		
+		//영화 이름,정보들
+		for(int i = 0; i < jlrank_name.length; i++) {
+			jlrank_name[i] = new JLabel();
+			jlRaing[i] = new JLabel();
+			jlopen_day[i] = new JLabel();
 			if(i < 4) {
-				rank_name[i].setBounds(Padding_Left - 10 + (i * 325), Padding_Top + 465, 225, 40);
+				jlrank_name[i].setBounds(5+Padding_Left - 10 + (i * 260), Padding_Top+330, 225, 40);
+				jlRaing[i].setBounds(5+Padding_Left - 10 + (i * 260), Padding_Top+370, 60, 40);
+				jlopen_day[i].setBounds(65+Padding_Left - 10 + (i * 260), Padding_Top+370, 160, 40);
 			}else {
-				rank_name[i].setBounds(-1160 + (i * 325), Padding_Top + 965, 225, 40);
+				jlrank_name[i].setBounds(10+Padding_Left -10 +((i-(jlrank.length/2)) * 260), Padding_Top+500+330 ,225, 40);
+				jlRaing[i].setBounds(10+Padding_Left -10 +((i-(jlrank.length/2)) * 260), Padding_Top+500+370, 60, 40);
+				jlopen_day[i].setBounds(70+Padding_Left -10 +((i-(jlrank.length/2)) * 260), Padding_Top+500+370, 160, 40);
 			}
+			//이름
+			jlrank_name[i].setText(movies[i].getM_name());
+			jlrank_name[i].setFont(m_name_font);
+			//jlrank_name[i].setOpaque(true);
+			//jlrank_name[i].setBackground(Color.YELLOW);
+			jpanel.add(jlrank_name[i]);
+			//평점
+			jlRaing[i].setText("평점"+movies[i].getRating());
+			jlRaing[i].setFont(option_font);
+			//jlRaing[i].setOpaque(true);
+			//jlRaing[i].setBackground(Color.GREEN);
+			jpanel.add(jlRaing[i]);
+			//개봉일
+			jlopen_day[i].setText("  개봉일"+movies[i].getOpen_day());
+			jlopen_day[i].setFont(option_font);
+			//jlopen_day[i].setOpaque(true);
+			//jlopen_day[i].setBackground(Color.RED);
+			jpanel.add(jlopen_day[i]);
 			
-			rank_name[i].setText(movies[i].getM_name());
-			rank_name[i].setFont(m_name_font);
-			rank_name[i].setHorizontalAlignment(JLabel.CENTER);
-			panel.add(rank_name[i]);
 		}
 		
-		//Panel
+		//Panel_movie
 		size.setSize(Main.SCREEN_WIDTH, Panel_Height);
-		panel.setBackground(Color.WHITE);
-		panel.setPreferredSize(size);
-		panel.setLayout(null);
+		jpanel.setBackground(Color.WHITE);
+		jpanel.setPreferredSize(size);
+		jpanel.setLayout(null);
 		
-		JScrollPane sp = new JScrollPane(panel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
-		sp.setBounds(0, (int) (Main.SCREEN_HEIGHT*0.25), Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
+		//panel_select
+		selectPanel.setBounds((int)(Main.SCREEN_WIDTH*0.8), (int) (Main.SCREEN_HEIGHT*0.25), (int)(Main.SCREEN_WIDTH*0.2), Main.SCREEN_HEIGHT);
+		selectPanel.setBackground(Color.WHITE);
+		selectPanel.setLayout(null);
+		add(selectPanel);
+		
+		JScrollPane sp = new JScrollPane(jpanel, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		sp.setBounds(0, (int) (Main.SCREEN_HEIGHT*0.25), (int)(Main.SCREEN_WIDTH*0.8), Main.SCREEN_HEIGHT);
 		add(sp);
 		
 		
@@ -203,32 +264,44 @@ public class ChartPage extends CategoryFrame {
 				}
 			}*/
 			
-			if(e.getSource() == rating) {
+			if(e.getSource() == btn_rating) {
 				calumn = "rating";
-			}else if(e.getSource()==audience) {
+			}else if(e.getSource()==btn_audience) {
 				calumn = "audience";
-			}else if(e.getSource()==open_day) {
+			}else if(e.getSource()==btn_openday) {
 				calumn = "open_day";
-			}else if(e.getSource()==ganada) {
+			}else if(e.getSource()==btn_ganada) {
 				calumn ="m_name";
 			}
 			
 			
 			
-			if(comboBox.getSelectedIndex() == 0) {//all
-				movies = connection.getMovieInfoAll(calumn);
+			/*if(radioGenre.getSelectedIndex() == 0) {//all
+				movies = moive_connect.getMovieInfoAll(calumn);
 			}else {
 				for(int i=1; i<string_genre.length; i++) {//나머지
-					if(comboBox.getSelectedIndex() == i)
-						movies = connection.getMovieInfo(string_genre[i],calumn);
+					if(radioGenre.getSelectedIndex() == i)
+						movies = moive_connect.getMovieInfo(string_genre[i],calumn);
 				}
-			}
+			}*/
 			
 			
 			//label 이름 set
-			for(int i=0; i<rank_name.length; i++) {
-				rank_name[i].setText(movies[i].getM_name());
+			for(int i=0; i<jlrank_name.length; i++) {
+				jlrank_name[i].setText(movies[i].getM_name());
 			}
+			//poster 이미지 set
+			int n=0;
+			for(int i=0; i<jlposter.length; i++) {
+				for(int j=0; j<jlposter[i].length; j++) {
+					String src = "src/imges/"+movies[n].getM_name()+".jpg";
+					//String src = "src/imges/겨울 왕국.jpg";
+					imgPoster = new ImageIcon(src);
+					jlposter[i][j].setIcon(imgPoster);
+					n++;
+				}
+			}
+			
 		}
 
 		@Override
@@ -244,11 +317,11 @@ public class ChartPage extends CategoryFrame {
 		public void mouseEntered(MouseEvent e) {
 			//JLabel l = (JLabel)e.getSource();
 
-			for(int i = 0; i < poster.length; i++) {
-				for(int j = 0; j < poster[i].length; j++) {
-					if(e.getSource() == poster[i][j]) {
+			for(int i = 0; i < jlposter.length; i++) {
+				for(int j = 0; j < jlposter[i].length; j++) {
+					if(e.getSource() == jlposter[i][j]) {
 						//movie_info[i][j].setVisible(true);
-						poster[i][j].setVisible(false);
+						jlposter[i][j].setVisible(false);
 					}
 				}
 			}
@@ -259,11 +332,11 @@ public class ChartPage extends CategoryFrame {
 		public void mouseExited(MouseEvent e) {
 			//JLabel l = (JLabel)e.getSource();
 			
-			for(int i = 0; i < poster.length; i++) {
-				for(int j = 0; j < poster[i].length; j++) {
-					if(e.getSource() == poster[i][j]) {
+			for(int i = 0; i < jlposter.length; i++) {
+				for(int j = 0; j < jlposter[i].length; j++) {
+					if(e.getSource() == jlposter[i][j]) {
 						//movie_info[i][j].setVisible(false);
-						poster[i][j].setVisible(true);
+						jlposter[i][j].setVisible(true);
 					}
 				}
 			}
