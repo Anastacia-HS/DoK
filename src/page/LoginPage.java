@@ -35,9 +35,10 @@ public class LoginPage extends JFrame{
 	private JTextField jtId = new JTextField();
 	private JLabel jlPw = new JLabel("PassWord");
 	private JPasswordField jtPw = new JPasswordField();
-	private JButtonT jbtnLogin = new JButtonT();
-	private JButtonT jbtnSingUp = new JButtonT();
-	private ImageIcon imgLogo = new ImageIcon("src/imges/dok.png");
+	private JButton jbtnLogin = new JButton();
+	private JButton jbtnSignUp = new JButton();
+	private ImageIcon imgLogin = new ImageIcon("src/imges/login.png");
+	private ImageIcon imgSignUp = new ImageIcon("src/imges/signup.png");
 	private JLabel jlLogo = new JLabel("DoK");
 	
 	
@@ -48,7 +49,7 @@ public class LoginPage extends JFrame{
 	//font
 	protected Font Logo = new Font("Franklin Gothic Heavy", Font.PLAIN, 75);
 	private Font font1 = new Font("나눔바른고딕", Font.BOLD, 20);
-	private Font font2 = new Font("나눔바른고딕", Font.PLAIN, 15);
+	private Font font2 = new Font("나눔바른고딕", Font.PLAIN, 20);
 	
 	public LoginPage() {
 		super("Login");
@@ -97,19 +98,27 @@ public class LoginPage extends JFrame{
 		jp.add(jtPw);
 		
 		//로그인 버튼
-		jbtnLogin.setText("로그인");
+		/*jbtnLogin.setText("로그인");
 		jbtnLogin.setFont(font1);
 		jbtnLogin.setBounds(C_X + 30,LoginBtn_Y,125,40);
+		jp.add(jbtnLogin);*/
+		jbtnLogin.setIcon(imgLogin);
+		jbtnLogin.setBounds(C_X + 15,LoginBtn_Y,125,40);
+		jbtnLogin.setBorderPainted(false);
 		jp.add(jbtnLogin);
 		
 		//회원가입 버튼
-		jbtnSingUp.setText("회원가입");
-		jbtnSingUp.setBounds(C_X + 180,LoginBtn_Y,125,40);
+		/*jbtnSingUp.setText("회원가입");
+		jbtnSingUp.setBounds(C_X + 165,LoginBtn_Y,125,40);
 		jbtnSingUp.setFont(font1);
-		jp.add(jbtnSingUp);
+		jp.add(jbtnSingUp);*/
+		jbtnSignUp.setIcon(imgSignUp);
+		jbtnSignUp.setBounds(C_X + 165,LoginBtn_Y,125,40);
+		jbtnSignUp.setBorderPainted(false);
+		jp.add(jbtnSignUp);
 		
 		jbtnLogin.addActionListener(new EventHandler());
-		jbtnSingUp.addActionListener(new EventHandler());
+		jbtnSignUp.addActionListener(new EventHandler());
 			
 	}
 	class EventHandler implements ActionListener{
@@ -133,7 +142,7 @@ public class LoginPage extends JFrame{
 				}
 				
 				
-			}else if(e.getSource() == jbtnSingUp) {//회원가입 버튼
+			}else if(e.getSource() == jbtnSignUp) {//회원가입 버튼
 				new SignUpPage();
 				//dispose();
 				//setVisible(false);
