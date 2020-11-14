@@ -27,6 +27,8 @@ public class DOKPage extends CategoryFrame {
 	private ImageIcon[] img_logo = new ImageIcon[movieN];
 	private JLabel[] movieName = new JLabel[4];
 	
+	private ImageIcon imgMore = new ImageIcon("src/imges/more.png");
+	private ImageIcon imgBoxoffice = new ImageIcon("src/imges/boxoffice.png");
 	
 	//Design
 	Font font1 = new Font("나눔바른고딕", Font.PLAIN, 20); 
@@ -53,16 +55,15 @@ public class DOKPage extends CategoryFrame {
 		add(panel);
 		
 		//박스 오피스 Label
-		boxoffice.setText("박스오피스");
-		boxoffice.setFont(font2);
 		boxoffice.setBounds(200,80,200,50);
+		boxoffice.setIcon(imgBoxoffice);
+		boxoffice.setOpaque(false);
 		panel.add(boxoffice);
 		
 		//더 많은 영화 보기 Lable
-		btn_plusMovie.setText("더 많은 영화보기");
-		btn_plusMovie.setFont(font3);
-		btn_plusMovie.setFocusPainted(false);
+		btn_plusMovie.setIcon(imgMore);
 		btn_plusMovie.setBorderPainted(false);
+		btn_plusMovie.setOpaque(true);
 		btn_plusMovie.setBackground(Color.WHITE);
 		btn_plusMovie.setBounds(Main.SCREEN_WIDTH-350,120,200,50);
 		panel.add(btn_plusMovie);

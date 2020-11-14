@@ -13,7 +13,9 @@ import java.sql.Connection;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -34,7 +36,7 @@ public class SignUpPage extends JFrame {
 	private Dimension size = new Dimension();// 사이즈를 지정하기 위한 객체 생성
 	
 	// 위치
-	private final static int C_X = Main.SCREEN_WIDTH / 2 - 250;
+	private final static int C_X = 90;
 	private final static int ID_Y = 150;
 	private final static int PW_Y = ID_Y+150;
 	private final static int PWCheck_Y = PW_Y+150;
@@ -44,9 +46,9 @@ public class SignUpPage extends JFrame {
 	private final static int Phone_Y = Gender_Y+150;
 	private final static int Taste_Y = Phone_Y+150;
 	// private final static int TasteCB_Y = 1300;
-	private final static int SignUP_Y = 1850;
+	private final static int SignUP_Y = 1700;
 	private final static int TopMargin_Y = 80;
-	private final static int Taste_N = 6;
+	private final static int Taste_N = 7;
 	private final static int PanelHeight = Main.SCREEN_HEIGHT * 2 ;
 
 	// component
@@ -61,7 +63,9 @@ public class SignUpPage extends JFrame {
 	private JLabel birthday = new JLabel("생년월일(8자리)을 입력해주세요*");
 	private JLabel gender = new JLabel("성별을 입력해주세요*");
 	private JLabel phone = new JLabel("전화번호를 입력해주세요*");
-	private JLabel jlTaste = new JLabel("취향을 선택해주세요(최대2개)");
+	private JLabel jlTaste = new JLabel("취향을 선택해주세요");
+	private JLabel ww = new JLabel("-");
+	private JLabel ss = new JLabel("-");
 	//private String[] hint = {"이름","생년월일(8자리)"};
 	private JTextField input_id = new JTextField();
 	private JPasswordField input_password = new JPasswordField();
@@ -70,26 +74,34 @@ public class SignUpPage extends JFrame {
 	private JTextField input_birtyday = new JTextField();
 	private ButtonGroup input_gender = new ButtonGroup();
 	private JRadioButton woman = new JRadioButton("여자");
+	private String[] string_phone = new String[] {"010", "02", "051", "053", "062", "042", "052", "044", "031", "033", "043", "041", "063", "061", "054", "055", "064"};
 	private JRadioButton man = new JRadioButton("남자");
-	private JTextField input_phone = new JTextField();
-	private JCheckBox[] checkbox_taste = new JCheckBox[Taste_N];
-	private JButtonT btn_signUp = new JButtonT();
+	private JComboBox input_phone1 = new JComboBox(string_phone);
+	private JTextField input_phone2 = new JTextField();
+	private JTextField input_phone3 = new JTextField();
+	private ButtonGroup g = new ButtonGroup();
+	private JRadioButton[] checkbox_taste = new JRadioButton[Taste_N];
+	private JButton btn_signUp = new JButton();
+	
+	private ImageIcon imgSignUP = new ImageIcon("src/img/signUp.png");
 
 	
 	//변수
-	private String[] string_taste = new String[] { "액션", "로맨스", "공포", "판타지", "SF-공상과학", "스릴러" };
+	private String[] string_taste = new String[] { "공포", "드라마", "로맨스", "스릴러", "액션", "애니메이션", "SF" };
+	
 	private int n = 0;
 	private String userID, userPassword, userPasswordCheck, userName,useryymmdd,userGender, userPhone,userTaste1, userTaste2;
 
 
 	// font
-	private Font font1 = new Font(null, Font.BOLD, 20);
-	private Font font2 = new Font(null, Font.PLAIN, 20);
+	private Font Logo = new Font("Franklin Gothic Heavy", Font.PLAIN, 85);
+	private Font font1 = new Font("나눔바른고딕", Font.BOLD, 20);
+	private Font font2 = new Font("나눔바른고딕", Font.PLAIN, 17);
 
 	public SignUpPage() {
 
 		super("회원가입");
-		setSize(Main.SCREEN_WIDTH, Main.SCREEN_HEIGHT);
+		setSize(500, Main.SCREEN_HEIGHT - 150);
 		setResizable(false);
 		getContentPane().setLayout(null); // 레이아웃 null
 		setVisible(true);
@@ -110,9 +122,13 @@ public class SignUpPage extends JFrame {
 		add(scrollPanel);
 
 		// 로고
-		logo.setIcon(imgLogo);
-		logo.setBounds(Main.SCREEN_WIDTH / 2 - 100, 30, 200, 100);
+		//logo.setIcon(imgLogo);
+		logo.setText("DoK");
+		logo.setBounds(150, 25, 200, 100);
+		logo.setFont(Logo);
+		//logo.setBounds(Main.SCREEN_WIDTH / 2 - 100, 30, 200, 100);
 		panel.add(logo);
+		
 
 		// 아이디 label
 		id.setBounds(C_X, ID_Y, 200, 100);
@@ -120,7 +136,7 @@ public class SignUpPage extends JFrame {
 		panel.add(id);
 
 		// 아이디 textField
-		input_id.setBounds(C_X, ID_Y + TopMargin_Y, 500, 50);
+		input_id.setBounds(C_X, ID_Y + TopMargin_Y, 300, 40);
 		input_id.setFont(font2);
 		panel.add(input_id);
 
@@ -130,7 +146,7 @@ public class SignUpPage extends JFrame {
 		panel.add(password);
 
 		// 비밀번호 textField
-		input_password.setBounds(C_X, PW_Y + TopMargin_Y, 500, 50);
+		input_password.setBounds(C_X, PW_Y + TopMargin_Y, 300, 40);
 		input_password.setFont(font2);
 		panel.add(input_password);
 
@@ -140,7 +156,7 @@ public class SignUpPage extends JFrame {
 		panel.add(password_check);
 
 		// 비밀번호 재확인 textField
-		input_passwordCheck.setBounds(C_X, PWCheck_Y + TopMargin_Y, 500, 50);
+		input_passwordCheck.setBounds(C_X, PWCheck_Y + TopMargin_Y, 300, 40);
 		input_passwordCheck.setFont(font2);
 		panel.add(input_passwordCheck);
 
@@ -150,72 +166,93 @@ public class SignUpPage extends JFrame {
 		panel.add(name);
 
 		// 이름 textField
-		input_name.setBounds(C_X, Name_Y + TopMargin_Y, 500, 50);
+		input_name.setBounds(C_X, Name_Y + TopMargin_Y, 300, 40);
 		input_name.setFont(font2);
 		panel.add(input_name);
 
 		// 생년월일 label
-		birthday.setBounds(C_X, Birth_Y, 500, 100);
+		birthday.setBounds(C_X, Birth_Y, 300, 100);
 		birthday.setFont(font1);
 		panel.add(birthday);
 
 		// 생년월일 textField
-		input_birtyday.setBounds(C_X, Birth_Y + TopMargin_Y, 500, 50);
+		input_birtyday.setBounds(C_X, Birth_Y + TopMargin_Y, 300, 40);
 		input_birtyday.setFont(font2);
 		panel.add(input_birtyday);
 		
 		
 		//성별 label
-		gender.setBounds(C_X, Gender_Y,300,100);
+		gender.setBounds(C_X, Gender_Y,200,100);
 		gender.setFont(font1);
 		panel.add(gender);
 		
 		//성별m radio
-		man.setBounds(C_X,Gender_Y+TopMargin_Y,100,50);
+		man.setBounds(C_X,Gender_Y+TopMargin_Y,75,50);
 		man.setFont(font2);
+		man.setOpaque(true);
+		man.setBackground(Color.WHITE);
 		man.addItemListener(new RadioButtonEvent());
 		input_gender.add(man);
 		panel.add(man);
 		
 		//성별w radio
-		woman.setBounds(C_X+110,Gender_Y+TopMargin_Y,100,50);
+		woman.setBounds(C_X+110,Gender_Y+TopMargin_Y,75,50);
 		woman.setFont(font2);
 		woman.addItemListener(new RadioButtonEvent());
+		woman.setOpaque(true);
+		woman.setBackground(Color.WHITE);
 		input_gender.add(woman);
 		panel.add(woman);
 
 		// 전화번호 label
-		phone.setBounds(C_X, Phone_Y, 300, 100);
+		phone.setBounds(C_X, Phone_Y, 225, 100);
 		phone.setFont(font1);
 		panel.add(phone);
 
 		// 전화번호 textField
-		input_phone.setBounds(C_X, Phone_Y + TopMargin_Y, 500, 50);
-		input_phone.setFont(font2);
-		panel.add(input_phone);
+		input_phone1.setFont(font2);
+		input_phone1.setBounds(C_X, Phone_Y + TopMargin_Y, 90, 40);
+		panel.add(input_phone1);
+		
+		ww.setBounds(C_X + 95, Phone_Y + TopMargin_Y, 15, 40);
+		ww.setFont(font2);
+		panel.add(ww);
+		
+		input_phone2.setBounds(C_X + 110, Phone_Y + TopMargin_Y, 90, 40);
+		input_phone2.setFont(font2);
+		panel.add(input_phone2);
+		
+		ss.setBounds(C_X + 205, Phone_Y + TopMargin_Y, 15, 40);
+		ss.setFont(font2);
+		panel.add(ss);
+		
+		input_phone3.setBounds(C_X + 220, Phone_Y + TopMargin_Y, 90, 40);
+		input_phone3.setFont(font2);
+		panel.add(input_phone3);
 
 		// 취향 label
-		jlTaste.setBounds(C_X, Taste_Y, 300, 100);
+		jlTaste.setBounds(C_X, Taste_Y, 250, 100);
 		jlTaste.setFont(font1);
 		panel.add(jlTaste);
 
 		// 취향 checkbox
 		for (int i = 0; i < Taste_N; i++) {
-			checkbox_taste[i] = new JCheckBox();
+			checkbox_taste[i] = new JRadioButton();
 			checkbox_taste[i].setText(string_taste[i]);
 			checkbox_taste[i].setFont(font2);
 			checkbox_taste[i].setFocusPainted(false);
 			// setBorderPainted(false);
-			checkbox_taste[i].setBackground(Color.PINK);
-			checkbox_taste[i].setBounds(C_X, Taste_Y + (TopMargin_Y) * (i + 1), 150, 50);
+			checkbox_taste[i].setBackground(Color.WHITE);
+			checkbox_taste[i].setBounds(C_X, Taste_Y + 50 * (i + 2), 150, 40);
+			g.add(checkbox_taste[i]);
 			panel.add(checkbox_taste[i]);
 			checkbox_taste[i].addItemListener(new CheckBoxEvent());
 		}
 
 		// 회원가입
-		btn_signUp.setText("회원가입");
-		btn_signUp.setFont(font1);
-		btn_signUp.setBounds(C_X, SignUP_Y, 500, 100);
+		btn_signUp.setBounds(C_X + 60, SignUP_Y, 200, 50);
+		btn_signUp.setIcon(imgSignUP);
+		btn_signUp.setBorderPainted(false);
 		panel.add(btn_signUp);
 
 		// 회원가입 리스너
@@ -230,7 +267,7 @@ public class SignUpPage extends JFrame {
 				userPasswordCheck = input_passwordCheck.getText();
 				userName = input_name.getText();
 				useryymmdd = input_birtyday.getText();
-				userPhone = input_phone.getText();
+				userPhone = input_phone1.getSelectedIndex() + input_phone2.getText() + input_phone3.getText();
 				
 				
 				JOptionPane message =new JOptionPane();//메시지 박스 객체

@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -40,7 +41,10 @@ public class PayPage extends JFrame {
 	private JTextField input_carNumber = new JTextField();
 	private JLabel cardPassword = new JLabel("카드 비밀번호 4자를 입력해주세요");
 	private JTextField input_carPassword = new JTextField();
-	private JButton finish = new JButton("결제");
+	private JButton finish = new JButton();
+	
+	private ImageIcon imgFinish = new ImageIcon("src/imges/finish.png");
+
 	
 	//design
 	Font compo = new Font("나눔바른고딕", Font.BOLD, 20);
@@ -126,10 +130,9 @@ public class PayPage extends JFrame {
 		panel.add(input_carPassword);
 		
 		//결제 확인
+		finish.setIcon(imgFinish);
 		finish.setBounds(250-75, PaddingTop + 600, 150, 50);
-		finish.setBackground(Color.PINK);
-		finish.setFont(compo);
-		finish.setHorizontalAlignment(JLabel.CENTER);
+		finish.setBorderPainted(false);
 		panel.add(finish); 
 		
 		

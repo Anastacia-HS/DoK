@@ -5,6 +5,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -28,7 +29,9 @@ public class ReservationCheckPage extends JFrame implements ActionListener {
 	private JLabel sit = new JLabel("좌석");
 	
 	private JLabel sure = new JLabel("결제를 진행하시겠습니까 ?");
-	private JButton sureBtn = new JButton("결제창으로");
+	private JButton sureBtn = new JButton();
+	
+	private ImageIcon imgSure = new ImageIcon("src/imges/sure.png");
 	
 	//Design
 	Font bold_font = new Font("나눔바른고딕", Font.BOLD, 25);
@@ -90,10 +93,9 @@ public class ReservationCheckPage extends JFrame implements ActionListener {
 		sure.setHorizontalAlignment(JLabel.LEFT);
 		panel.add(sure);
 		
-		sureBtn.setBounds(PaddingLeft + 125, PaddingTop + 600, 150, 50);
-		sureBtn.setBackground(Color.PINK);
-		sureBtn.setFont(plain_font);
-		sureBtn.setHorizontalAlignment(JLabel.CENTER);
+		sureBtn.setIcon(imgSure);
+		sureBtn.setBounds(PaddingLeft + 150,PaddingTop + 600,150,50);
+		sureBtn.setBorderPainted(false);
 		panel.add(sureBtn);
 		
 		sureBtn.addActionListener(this);
